@@ -2,12 +2,17 @@
 
 import { FC, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
 import { HiHome } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
+import { FaUserAlt } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
+import { toast } from 'react-hot-toast';
 
 import Button from '@/components/button';
+import useAuthModal from '@/hooks/useAuthModal';
+import { useUser } from '@/hooks/useUser';
 
 interface HeaderProps {
   children: ReactNode;
@@ -16,9 +21,53 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ children, className }) => {
   const router = useRouter();
-  const handleLogout = () => {
-    // Handle logout logic
+  const authModal = useAuthModal();
+  const supabaseClient = useSupabaseClient();
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    router.refresh();
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success('Logged out!');
+    }
   };
+
+  const handleBack = () => router.back();
+  const handleForward = () => router.forward();
+
+  const renderButtons = () => (
+    <div className='flex gap-x-4 items-center'>
+      <Button className='bg-white px-6 py-2' onClick={handleLogout}>
+        Logout
+      </Button>
+      <Button className='bg-white' onClick={() => router.push('/account')}>
+        <FaUserAlt />
+      </Button>
+    </div>
+  );
+
+  const renderAuthButtons = () => (
+    <>
+      <div>
+        <Button
+          className='bg-transparent text-neutral-300 font-medium'
+          onClick={authModal.onOpen}
+        >
+          Sign Up
+        </Button>
+      </div>
+      <div>
+        <Button className='bg-white px-6 py-2' onClick={authModal.onOpen}>
+          Log In
+        </Button>
+      </div>
+    </>
+  );
+
   return (
     <div
       className={twMerge(
@@ -26,17 +75,17 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
         className
       )}
     >
-      <div className='flex items-center justify-between mb-4 w-full '>
+      <div className='flex items-center justify-between mb-4 w-full'>
         <div className='hidden gap-x-2 items-center md:flex'>
           <button
             className='grid place-items-center bg-black rounded-full transition hover:opacity-75'
-            onClick={() => router.back()}
+            onClick={handleBack}
           >
             <RxCaretLeft className='text-white' size={35} />
           </button>
           <button
             className='grid place-items-center bg-black rounded-full transition hover:opacity-75'
-            onClick={() => router.forward()}
+            onClick={handleForward}
           >
             <RxCaretRight className='text-white' size={35} />
           </button>
@@ -50,21 +99,7 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
           </button>
         </div>
         <div className='flex items-center justify-between gap-x-4'>
-          <>
-            <div>
-              <Button
-                className='bg-transparent text-neutral-300 font-medium'
-                onClick={() => {}}
-              >
-                Sign Up
-              </Button>
-            </div>
-            <div>
-              <Button className='bg-white px-6 py-2' onClick={() => {}}>
-                Log In
-              </Button>
-            </div>
-          </>
+          {user ? renderButtons() : renderAuthButtons()}
         </div>
       </div>
       {children}
