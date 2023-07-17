@@ -10,8 +10,8 @@ import { FaUserAlt } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import { toast } from 'react-hot-toast';
 
-import Button from '@/components/button';
-import useAuthModal from '@/hooks/useAuthModal';
+import Button from '@/components/shared/button';
+import { useAuthModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';
 
 interface HeaderProps {

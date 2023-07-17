@@ -3,10 +3,16 @@
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import { useAuthModal, useUploadModal } from '@/hooks/useModal';
+import { useUser } from '@/hooks/useUser';
+
 const Library = () => {
-  const onClick = () => {
-    // Handle upload later
-  };
+  const uploadModal = useUploadModal();
+  const authModal = useAuthModal();
+  const { user } = useUser();
+
+  const onClick = () => (!user ? authModal.onOpen() : uploadModal.onOpen());
+
   return (
     <div className='grid'>
       <div className='flex items-center justify-between px-5 pt-4 mb-4'>

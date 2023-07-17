@@ -9,8 +9,9 @@ import {
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 
-import Modal from '@/components/modal';
-import useAuthModal from '@/hooks/useAuthModal';
+import Modal from '@/components/modals/modal';
+import { useAuthModal } from '@/hooks/useModal';
+import { handleOpenChange } from '@/helpers';
 
 const AuthModal = () => {
   const router = useRouter();
@@ -25,17 +26,12 @@ const AuthModal = () => {
     }
   }, [session, router, onClose]);
 
-  const onChange = (open: boolean) => {
-    if (!open) {
-      onClose();
-    }
-  };
   return (
     <Modal
       title='Welcome back'
       description='Login to your account'
       isOpen={isOpen}
-      onChange={onChange}
+      onChange={(open) => handleOpenChange(open, onClose)}
     >
       <Auth
         theme='dark'
