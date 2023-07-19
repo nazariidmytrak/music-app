@@ -10,16 +10,16 @@ import { FaUserAlt } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import { toast } from 'react-hot-toast';
 
-import Button from '@/components/shared/button';
+import Button from '@/components/shared/buttons/button';
 import { useAuthModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';
 
-interface HeaderProps {
+interface Props {
   children: ReactNode;
   className?: string;
 }
 
-const Header: FC<HeaderProps> = ({ children, className }) => {
+const Header: FC<Props> = ({ children, className }) => {
   const router = useRouter();
   const authModal = useAuthModal();
   const supabaseClient = useSupabaseClient();

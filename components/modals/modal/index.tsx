@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IoMdClose } from 'react-icons/io';
 
-interface ModalProps {
+interface Props {
   title: string;
   isOpen: boolean;
   description: string;
@@ -10,7 +10,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const Modal: FC<ModalProps> = ({
+const Modal: FC<Props> = ({
   title,
   isOpen,
   description,

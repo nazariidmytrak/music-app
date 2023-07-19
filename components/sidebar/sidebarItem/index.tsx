@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { IconType } from 'react-icons';
 import { twMerge } from 'tailwind-merge';
 
-interface SidebarItemProps {
+interface Props {
   icon: IconType;
   href: string;
   label: string;
   active?: boolean;
 }
 
-const SidebarItem: FC<SidebarItemProps> = ({
+const SidebarItem: FC<Props> = ({
   icon: Icon,
   href,
   label,

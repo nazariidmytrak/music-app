@@ -5,7 +5,7 @@ import {
   useUser as useSupabaseUser,
 } from '@supabase/auth-helpers-react';
 
-import { Subscription, UserDetails } from '@/types/types';
+import { Subscription, UserDetails } from '@/types';
 
 type UserContextType = {
   isLoading: boolean;

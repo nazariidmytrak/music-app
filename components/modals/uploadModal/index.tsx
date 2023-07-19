@@ -8,8 +8,8 @@ import { toast } from 'react-hot-toast';
 import uniqid from 'uniqid';
 
 import Modal from '@/components/modals/modal';
-import Input from '@/components/shared/input';
-import Button from '@/components/shared/button';
+import Input from '@/components/shared/inputs/input';
+import Button from '@/components/shared/buttons/button';
 import { handleOpenChange } from '@/helpers';
 import { useUploadModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';

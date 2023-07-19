@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { FaPlay } from 'react-icons/fa';
 
-interface ListItemProps {
+interface Props {
   name: string;
   href: string;
   image: string;
 }
 
-const ListItem: FC<ListItemProps> = ({ name, href, image }) => {
+const ListItem: FC<Props> = ({ name, href, image }) => {
   const router = useRouter();
 
   const onClick = () => {
