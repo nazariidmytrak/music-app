@@ -4,6 +4,8 @@ import { FC } from 'react';
 
 import { Song } from '@/types';
 import MediaItem from '@/components/items/mediaItem';
+import LikeButton from '@/components/shared/buttons/likeButton';
+import EmptySongsMessage from '@/components/shared/emptySongs';
 
 interface Props {
   songs: Song[];
@@ -11,11 +13,7 @@ interface Props {
 
 const SearchContent: FC<Props> = ({ songs }) => {
   if (songs.length === 0) {
-    return (
-      <div className='w-full px-6 flex flex-col gap-y-2 text-neutral-400'>
-        No songs found
-      </div>
-    );
+    return <EmptySongsMessage message='No songs found' />;
   }
   return (
     <div className='w-full px-6 flex flex-col gap-y-2'>
@@ -24,6 +22,7 @@ const SearchContent: FC<Props> = ({ songs }) => {
           <div className='flex-1'>
             <MediaItem onClick={() => {}} data={song} />
           </div>
+          <LikeButton songId={song.id} />
         </div>
       ))}
     </div>

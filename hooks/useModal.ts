@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ModalStore {
+export interface ModalStore {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
