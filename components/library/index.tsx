@@ -4,10 +4,11 @@ import { FC } from 'react';
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import MediaItem from '@/components/items/mediaItem';
 import { useAuthModal, useUploadModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';
+import useOnPlay from '@/hooks/useOnPlay';
 import { Song } from '@/types';
-import MediaItem from '@/components/items/mediaItem';
 
 interface Props {
   songs: Song[];
@@ -17,6 +18,7 @@ const Library: FC<Props> = ({ songs }) => {
   const uploadModal = useUploadModal();
   const authModal = useAuthModal();
   const { user } = useUser();
+  const onPlay = useOnPlay(songs);
 
   const onClick = () => (!user ? authModal.onOpen() : uploadModal.onOpen());
 
@@ -35,7 +37,11 @@ const Library: FC<Props> = ({ songs }) => {
       </div>
       <div className='grid gap-y-2 px-3'>
         {songs.map((song) => (
-          <MediaItem key={song.id} onClick={() => {}} data={song} />
+          <MediaItem
+            key={song.id}
+            onClick={(id: string) => onPlay(id)}
+            data={song}
+          />
         ))}
       </div>
     </div>
