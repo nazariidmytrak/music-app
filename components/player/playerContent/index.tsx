@@ -12,6 +12,7 @@ import PlayPauseButton from '@/components/shared/buttons/playPauseButton';
 import VolumeControls from './volumeControls';
 import PlayerControls from './playerControls';
 import usePlayer from '@/hooks/usePlayer';
+import { onPlayNextOrPrevious } from '@/helpers/playerHelpers';
 
 interface Props {
   song: Song;
@@ -34,34 +35,6 @@ const PlayerContent: FC<Props> = ({ song, songUrl }) => {
     }
   };
 
-  const onPlayNext = () => {
-    if (player.ids.length === 0) {
-      return;
-    }
-
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const nextSong = player.ids[currentIndex + 1];
-    if (!nextSong) {
-      return player.setId(player.ids[0]);
-    }
-
-    player.setId(nextSong);
-  };
-
-  const onPlayPrevious = () => {
-    if (player.ids.length === 0) {
-      return;
-    }
-
-    const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const previousSong = player.ids[currentIndex - 1];
-    if (!previousSong) {
-      return player.setId(player.ids[player.ids.length - 1]);
-    }
-
-    player.setId(previousSong);
-  };
-
   const [play, { pause, sound }] = useSound(songUrl, {
     format: ['mp3'],
     volume: volume,
@@ -69,7 +42,7 @@ const PlayerContent: FC<Props> = ({ song, songUrl }) => {
     onpause: () => setIsPlaying(false),
     onend: () => {
       setIsPlaying(false);
-      onPlayNext();
+      onPlayNextOrPrevious(player.ids, player.activeId, player.setId, 'next');
     },
   });
 
@@ -92,13 +65,7 @@ const PlayerContent: FC<Props> = ({ song, songUrl }) => {
         <PlayPauseButton onClick={handlePlay} icon={Icon} />
       </div>
       <div className='hidden h-full w-full justify-center items-center gap-x-6 max-w-[722px] md:flex'>
-        <PlayerControls
-          handlePlay={handlePlay}
-          icon={Icon}
-          onPlayNext={onPlayNext}
-          onPlayPrevious={onPlayPrevious}
-          songUrl={songUrl}
-        />
+        <PlayerControls handlePlay={handlePlay} icon={Icon} />
       </div>
       <div className='hidden justify-end pr-2 w-full md:flex'>
         <VolumeControls

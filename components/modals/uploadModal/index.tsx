@@ -10,7 +10,7 @@ import uniqid from 'uniqid';
 import Modal from '@/components/modals/modal';
 import Input from '@/components/shared/inputs/input';
 import Button from '@/components/shared/buttons/button';
-import { handleOpenChange } from '@/helpers';
+import { handleOpenChange } from '@/helpers/modalHelpers';
 import { useUploadModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';
 

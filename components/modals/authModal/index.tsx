@@ -11,7 +11,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 import Modal from '@/components/modals/modal';
 import { useAuthModal } from '@/hooks/useModal';
-import { handleOpenChange } from '@/helpers';
+import { handleOpenChange } from '@/helpers/modalHelpers';
 
 const AuthModal = () => {
   const router = useRouter();
