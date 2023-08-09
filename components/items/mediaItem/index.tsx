@@ -26,6 +26,7 @@ const MediaItem: FC<Props> = ({ onClick, data }) => {
       <div className='relative overflow-hidden min-h-[48px] min-w-[48px] rounded-md'>
         <Image
           className='object-cover'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           src={imageUrl || '/images/liked.png'}
           fill
           alt='Image'

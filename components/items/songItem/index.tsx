@@ -23,6 +23,7 @@ const SongItem: FC<Props> = ({ data, onClick }) => {
       <div className='relative aspect-square w-full h-full rounded-md overflow-hidden'>
         <Image
           className='object-cover'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           src={imageUrl || '/images/liken.png'}
           fill
           alt='Image'

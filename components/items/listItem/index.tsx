@@ -24,7 +24,13 @@ const ListItem: FC<Props> = ({ name, href, image }) => {
       onClick={onClick}
     >
       <div className='relative min-h-[64px] min-w-[64px]'>
-        <Image className='object-cover' fill src={image} alt='Image' />
+        <Image
+          className='object-cover'
+          fill
+          src={image}
+          alt='Image'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+        />
       </div>
       <p className='py-5 font-medium truncate'>{name}</p>
       <div className='grid place-items-center p-4 right-5 absolute transition opacity-0 rounded-full bg-green-500 drop-shadow-md group-hover:opacity-100 hover:scale-110'>
