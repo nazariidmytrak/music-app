@@ -1,8 +1,6 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
-import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2';
 import useSound from 'use-sound';
 
 import { Song } from '@/types';
@@ -12,7 +10,9 @@ import PlayPauseButton from '@/components/shared/buttons/playPauseButton';
 import VolumeControls from './volumeControls';
 import PlayerControls from './playerControls';
 import usePlayer from '@/hooks/usePlayer';
+import useVolumeStore from '@/hooks/useVolume';
 import { onPlayNextOrPrevious } from '@/helpers/playerHelpers';
+import CloseButtonAnimation from '@/components/animations/closeButtonAnimation';
 
 interface Props {
   song: Song;
@@ -20,12 +20,10 @@ interface Props {
 }
 
 const PlayerContent: FC<Props> = ({ song, songUrl }) => {
-  const [volume, setVolume] = useState(0.5);
+  const volume = useVolumeStore((state) => state.volume);
+  const setVolume = useVolumeStore((state) => state.setVolume);
   const [isPlaying, setIsPlaying] = useState(false);
   const player = usePlayer();
-
-  const Icon = isPlaying ? BsPauseFill : BsPlayFill;
-  const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -62,18 +60,20 @@ const PlayerContent: FC<Props> = ({ song, songUrl }) => {
         </div>
       </div>
       <div className='flex items-center justify-end w-full col-auto md:hidden'>
-        <PlayPauseButton onClick={handlePlay} icon={Icon} />
+        <PlayPauseButton onClick={handlePlay} isPlaying={isPlaying} />
       </div>
       <div className='hidden h-full w-full justify-center items-center gap-x-6 max-w-[722px] md:flex'>
-        <PlayerControls handlePlay={handlePlay} icon={Icon} />
+        <PlayerControls handlePlay={handlePlay} isPlaying={isPlaying} />
       </div>
       <div className='hidden justify-end pr-2 w-full md:flex'>
-        <VolumeControls
-          volumeIcon={VolumeIcon}
-          volume={volume}
-          setVolume={setVolume}
-        />
+        <VolumeControls volume={volume} setVolume={setVolume} />
       </div>
+      <button
+        className='absolute top-0 right-0 font-bold '
+        onClick={player.reset}
+      >
+        <CloseButtonAnimation />
+      </button>
     </div>
   );
 };

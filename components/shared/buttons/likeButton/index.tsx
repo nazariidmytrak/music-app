@@ -3,7 +3,8 @@
 import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSessionContext } from '@supabase/auth-helpers-react';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import UseAnimations from 'react-useanimations';
+import heart from 'react-useanimations/lib/heart';
 
 import { useAuthModal } from '@/hooks/useModal';
 import { useUser } from '@/hooks/useUser';
@@ -38,11 +39,15 @@ const LikeButton: FC<Props> = ({ songId }) => {
     );
   };
 
-  const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
-
   return (
     <button className='hover:opacity-75 transition' onClick={handleClick}>
-      <Icon color={isLiked ? '#22c55e' : 'white'} size={25} />
+      <UseAnimations
+        reverse={isLiked}
+        animation={heart}
+        strokeColor='#22c55e'
+        fillColor='#22c55e'
+        size={25}
+      />
     </button>
   );
 };

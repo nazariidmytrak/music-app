@@ -12,10 +12,6 @@ const useOnPlay = (songs: Song[]) => {
 
   const onPlay = useCallback(
     (id: string) => {
-      if (!user) {
-        return authModal.onOpen();
-      }
-
       player.setId(id);
       player.setIds(songs.map((song) => song.id));
     },

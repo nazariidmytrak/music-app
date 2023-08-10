@@ -1,20 +1,21 @@
 'use client';
 
 import { FC } from 'react';
-import { IconType } from 'react-icons';
+import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
 
 interface Props {
   onClick: () => void;
-  icon: IconType;
+  isPlaying: boolean;
 }
 
-const PlayPauseButton: FC<Props> = ({ onClick, icon: Icon }) => {
+const PlayPauseButton: FC<Props> = ({ onClick, isPlaying }) => {
+  const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   return (
     <div
       className='w-10 h-10 p-1 grid place-items-center rounded-full bg-white cursor-pointer'
       onClick={onClick}
     >
-      <Icon className='text-black' size={30} />
+      <Icon size={30} color='black' />
     </div>
   );
 };

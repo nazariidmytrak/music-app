@@ -2,17 +2,17 @@
 
 import { FC } from 'react';
 import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
-import { IconType } from 'react-icons';
+
 import { onPlayNextOrPrevious } from '@/helpers/playerHelpers';
 import PlayPauseButton from '@/components/shared/buttons/playPauseButton';
 import usePlayer from '@/hooks/usePlayer';
 
 interface Props {
   handlePlay: () => void;
-  icon: IconType;
+  isPlaying: boolean;
 }
 
-const PlayerControls: FC<Props> = ({ handlePlay, icon: Icon }) => {
+const PlayerControls: FC<Props> = ({ handlePlay, isPlaying }) => {
   const { ids, activeId, setId } = usePlayer();
   return (
     <>
@@ -21,7 +21,7 @@ const PlayerControls: FC<Props> = ({ handlePlay, icon: Icon }) => {
         size={30}
         onClick={() => onPlayNextOrPrevious(ids, activeId, setId, 'previous')}
       />
-      <PlayPauseButton onClick={handlePlay} icon={Icon} />
+      <PlayPauseButton onClick={handlePlay} isPlaying={isPlaying} />
       <AiFillStepForward
         className='text-neutral-400 cursor-pointer transition hover:text-white'
         size={30}
