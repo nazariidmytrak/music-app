@@ -14,15 +14,10 @@ const Slider: FC<Props> = ({ value = 1, onChange }) => {
   const rangeAnimation = useTransform(motionValue, [0, 1], ['100%', '0%']);
   const sliderRight = value === 0 ? '100%' : rangeAnimation;
 
-  /*  const variants = {
-    muted: { right: '100%' },
-    unmuted: { right: `${(1 - value) * 100}%` },
-  }; */
-
   const handleChange = (newValue: number[]) => {
     motionValue.set(newValue[0]);
     onChange?.(newValue[0]);
-    };
+  };
 
   return (
     <RadixSlider.Root
@@ -49,6 +44,10 @@ const Slider: FC<Props> = ({ value = 1, onChange }) => {
           className='h-full bg-white rounded-full absolute top-0 bottom-0 left-0'
         />
       </RadixSlider.Track>
+      <RadixSlider.Thumb
+        className='w-2 h-2 bg-white block rounded-full hover:bg-gray-400'
+        aria-label='Volume'
+      />
     </RadixSlider.Root>
   );
 };
